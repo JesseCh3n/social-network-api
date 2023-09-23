@@ -1,118 +1,109 @@
 const names = [
-  'Aaran',
-  'Aaren',
-  'Aarez',
-  'Aarman',
-  'Aaron',
-  'Aaron-James',
-  'Aarron',
-  'Aaryan',
-  'Aaryn',
-  'Aayan',
-  'Aazaan',
-  'Abaan',
-  'Abbas',
-  'Abdallah',
-  'Abdalroof',
-  'Abdihakim',
-  'Abdirahman',
-  'Abdisalam',
-  'Abdul',
-  'Abdul-Aziz',
-  'Abdulbasir',
-  'Abdulkadir',
-  'Abdulkarem',
-  'Smith',
-  'Jones',
-  'Coollastname',
-  'enter_name_here',
-  'Ze',
-  'Zechariah',
-  'Zeek',
-  'Zeeshan',
-  'Zeid',
-  'Zein',
-  'Zen',
-  'Zendel',
-  'Zenith',
-  'Zennon',
-  'Zeph',
-  'Zerah',
-  'Zhen',
-  'Zhi',
-  'Zhong',
-  'Zhuo',
-  'Zi',
-  'Zidane',
-  'Zijie',
-  'Zinedine',
-  'Zion',
-  'Zishan',
-  'Ziya',
-  'Ziyaan',
-  'Zohaib',
-  'Zohair',
-  'Zoubaeir',
-  'Zubair',
-  'Zubayr',
-  'Zuriel',
-  'Xander',
-  'Jared',
-  'Courtney',
-  'Gillian',
-  'Clark',
-  'Jared',
-  'Grace',
-  'Kelsey',
-  'Tamar',
-  'Alex',
-  'Mark',
-  'Tamar',
-  'Farish',
-  'Sarah',
-  'Nathaniel',
-  'Parker',
+  'Aaron Jones',
+  'Leo Aaron-James',
+  'Aayan Mohammed',
+  'Abbas Abdallah',
+  'Abdallah Abdalroof',
+  'Abdul Basir',
+  'Abdul Karem',
+  'Mye Coollastname',
+  'John Ze',
+  'Zi Yi',
+  'Zinedine Zidane',
+  'Zijie Hu',
+  'Zion Williams',
+  'Michael Jordan',
+  'Anthony Xander',
+  'Courtney Fuller',
+  'Gillian Flynn',
+  'Jared Casey',
+  'Grace Temple',
+  'Kelsey Liu',
+  'Tamara Smith',
+  'Alex Sander',
+  'Mark Webber',
+  'Graham Farish',
+  'Sarah Bane',
+  'Nathaniel Jackson',
+  'Tony Parker',
+];
+
+const emails = [
+  'hotmail.com',
+  'gmail.com',
+  'apple.com',
+  'amazon.com',
+  'facebook.com',
+  'tesla.com',
+  'secretemail.co',
+  'idunno.com',
+  'whatever.com'
 ];
 
 const appDescriptions = [
-  'Decision Tracker',
-  'Find My Phone',
-  'Learn Piano',
-  'Starbase Defender',
-  'Tower Defense',
+  'Its a cracker',
+  'I am thinking',
+  'Learning Piano',
+  'I am a digital nomad',
+  'This is an awesome game',
   'Monopoly Money Manager',
   'Movie trailers',
   'Hello world',
   'Stupid Social Media App',
-  'Notes',
-  'Messages',
-  'Email',
-  'Compass',
-  'Firefox',
+  'Facebook friends',
   'Running app',
   'Cooking app',
-  'Poker',
-  'Deliveries',
+  'Netflix addict',
+  'I am a foodie',
+  'Mama Mia!',
+  'Holy crab!'
 ];
+
+const appReactions = [
+  'Ok',
+  'Great',
+  'Wonderful',
+  'Bad',
+  'Poor',
+  'Wow',
+  'Yay',
+  'Its alright',
+  'Not too bad',
+  'Ecstatic'
+]
 
 // Get a random item given an array
 const getRandomArrItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
 // Gets a random full name
 const getRandomName = () =>
-  `${getRandomArrItem(names)} ${getRandomArrItem(names)}`;
+  `${getRandomArrItem(names)}`;
 
-// Function to generate random assignments that we can add to student object.
-const getRandomAssignments = (int) => {
+const getRandomEmail = (int) => 
+  `${names[int].split(" ")[0]}@${getRandomArrItem(emails)}`;
+
+const getRandomThoughts = (int) => {
   const results = [];
   for (let i = 0; i < int; i++) {
     results.push({
-      assignmentName: getRandomArrItem(appDescriptions),
-      score: Math.floor(Math.random() * (99 - 70 + 1) + 70),
+      thoughtText: getRandomArrItem(appDescriptions),
+      username: getRandomName(),
+      reactions: [...getRandomReactions(5)],
+    });
+  }
+  return results;
+};
+
+const getRandomReactions = (int) => {
+  const results = [];
+  for (let i = 0; i < int; i++) {
+    results.push({
+      reactionBody: getRandomArrItem(appReactions),
+      username: getRandomName(),
     });
   }
   return results;
 };
 
 // Export the functions for use in seed.js
-module.exports = { getRandomName, getRandomAssignments };
+module.exports = { names, getRandomThoughts, getRandomEmail };

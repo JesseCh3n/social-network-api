@@ -34,15 +34,16 @@ module.exports = {
       const thought = await Thought.create(req.body);
       const user = await User.findOneAndUpdate(
         { username: req.body.username },
-        { $push: { thoughts: req.params.thoughtId } },
-        { new: true }
+        { $addToSet: { thoughts: thought._id } },
+        { runValidators: true, new: true }
       );
       if (!user) {
         return res.status(404).json({
-          message: 'Thought deleted, but no users found',
+          message: 'Thought created, but no users found',
         });
       }
-      res.json(thought);
+      res.json({thought, user});
+
     } catch (err) {
       res.status(500).json(err);
     }
@@ -68,7 +69,7 @@ module.exports = {
           message: 'Thought deleted, but no users found',
         });
       }
-      res.json(thought);
+      res.json({thought, user});
     } catch (err) {
       res.status(500).json(err);
     }
