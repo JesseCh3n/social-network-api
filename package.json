@@ -1,6 +1,6 @@
 {
-  "name": "28-Stu_Mini-Project",
-  "version": "1.0.1",
+  "name": "social-network-api",
+  "version": "1.0.0",
   "description": "Mongoose back-end project - Main",
   "main": "index.js",
   "license": "MIT",
@@ -12,7 +12,9 @@
   },
   "dependencies": {
     "express": "^4.17.1",
-    "mongoose": "^7.0.2"
+    "mongoose": "^7.0.2",
+    "mongoose-unique-validator": "^4.0.0",
+    "date-fns": "^2.30.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.9"
