@@ -18,11 +18,11 @@ connection.once('open', async () => {
     }
 
 
-  // Create empty array to hold the users and the thoughts
+  // Create empty array to hold the users and create 50 random thoughts
   const users = [];
   const thoughts = getRandomThoughts(50);
 
-  // Loop 20 times -- add thoughts to the thoughts array
+  // Loop through the 'names' to generate User doc
   for (let i = 0; i < names.length; i++) {
     const username = names[i];
     const email = getRandomEmail(i);
@@ -33,25 +33,28 @@ connection.once('open', async () => {
     });
   }
 
-  await User.collection.insertMany(users);
-  // await Thought.collection.insertMany(thoughts);
-  const seedThought = await Thought.collection.insertMany(thoughts);
-  if (seedThought.length) {
-    for (let i = 0; i < thoughts.length; i++) {
-      await User.findOneAndUpdate(
-        { username: thoughts[i].username },
-        { $addToSet: { thoughts: seedThought.insertedIds[i].toString() } },
-        { runValidators: true, new: true }
-      );
-    }
-  }
-
+  // Looping async functions to link Thought id with User;
+  
+  await User.create(users).then(() => {
+    return Thought.create(thoughts).then(resolve => {
+      let prom = [];
+      for (let i=0; i < resolve.length; i++) {
+        console.log(resolve[i].username);
+        console.log(resolve[i]._id);
+        const e = User.findOneAndUpdate(
+          { username: resolve[i].username },
+          { $addToSet: { thoughts: resolve[i]._id } },
+          { runValidators: true, new: true }
+        );
+        prom.push(e);
+      }
+      return Promise.all(prom);
+    });
+  });
 
   // Log out the seed data to indicate what should appear in the database
   console.table(users);
   console.table(thoughts);
-  console.log(thoughts[0].username);
-  console.log(seedThought.insertedIds[0].toString());
   console.info('Seeding complete! 🌱');
   process.exit(0);
 });
