@@ -39,8 +39,8 @@ connection.once('open', async () => {
     return Thought.create(thoughts).then(resolve => {
       let prom = [];
       for (let i=0; i < resolve.length; i++) {
-        console.log(resolve[i].username);
-        console.log(resolve[i]._id);
+        // console.log(resolve[i].username);
+        // console.log(resolve[i]._id);
         const e = User.findOneAndUpdate(
           { username: resolve[i].username },
           { $addToSet: { thoughts: resolve[i]._id } },
